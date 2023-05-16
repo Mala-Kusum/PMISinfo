@@ -20,7 +20,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 public class Project_Detail extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    CollectionReference noteRef=db.collection("contacts");
+    CollectionReference noteRef=db.collection("PMIS");
     TextView id,name,upc,siteOffice,pmu,type,status,ro,state,dateOfAward,AE,AEContact,TL,TLContact,Contractor,ContractorContact,PM,PMContact,PMEmail,tEOT,EOTFrom,EOTTo,tCOS,COSFrom,COSTo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +62,7 @@ public class Project_Detail extends AppCompatActivity {
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                         id.setText(doc.get("PMIS ID").toString());
                         name.setText(doc.get("Project Name").toString());
-                        upc.setText(doc.get("Unique Project Code (UPC)").toString());
+                        upc.setText(doc.get("Unique Project Code").toString());
                         siteOffice.setText(doc.get("Project Site Office").toString());
                         pmu.setText(doc.get("Project Monitoring Unit").toString());
                         type.setText(doc.get("Project Type").toString());
@@ -78,7 +78,7 @@ public class Project_Detail extends AppCompatActivity {
                         ContractorContact.setText(doc.get("Contractor Contact").toString());
                         PM.setText(doc.get("Project Manager").toString());
                         PMContact.setText(doc.get("Project Manager Contact").toString());
-                        PMEmail.setText(doc.get("Project Manager Email").toString());
+                        PMEmail.setText(doc.get("Project Manager Email Address").toString());
                         tEOT.setText(doc.get("Total EOT").toString());
                         EOTFrom.setText(doc.get("Required EOT Date From").toString());
                         EOTTo.setText(doc.get("Required EOT Date To").toString());

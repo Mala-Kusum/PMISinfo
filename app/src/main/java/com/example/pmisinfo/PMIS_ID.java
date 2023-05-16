@@ -23,7 +23,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 public class PMIS_ID extends AppCompatActivity {
     Button b;
     EditText e;
-    public static Integer pmisid;
+    public static int pmisid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,11 +32,12 @@ public class PMIS_ID extends AppCompatActivity {
         e=findViewById(R.id.edit);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference noteRef=db.collection("PMIS");
-        pmisid=Integer.parseInt(e.getText().toString());
+
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("pmis id","e.getText().toString()");
+                pmisid=Integer.parseInt(e.getText().toString());
+               // Log.e("pmis id","e.getText().toString()");
                 Query query = noteRef.whereEqualTo("PMIS ID",Integer.parseInt(e.getText().toString()));
                 query.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
