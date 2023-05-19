@@ -12,6 +12,9 @@
         android:theme="@style/Theme.PMISInfo"
         tools:targetApi="31">
         <activity
+            android:name=".AddCOS"
+            android:exported="false" />
+        <activity
             android:name=".Project_Detail"
             android:exported="false" />
         <activity
