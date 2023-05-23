@@ -5,8 +5,8 @@
     <string name="nav_close">Close</string>
     <string-array name="RO">
         <item> "New Delhi" </item>
-        <item> "Ro- Leh/Srinagar" </item>
-        <item> " RO- Port Blair" </item>
+        <item> "Ro-Leh/Srinagar" </item>
+        <item> "RO-Port Blair" </item>
         <item> "RO-Agartala" </item>
         <item> "RO-Aizwal" </item>
         <item> "RO-Dehradun" </item>

@@ -52,7 +52,7 @@ public class Project_Detail extends AppCompatActivity {
         COSFrom=findViewById(R.id.RequiredCOSDateFrom);
         COSTo=findViewById(R.id.RequiredCOSDateTo);
         //public static final String
-        Query query = noteRef.whereEqualTo("PMIS ID",PMIS_ID.pmisid);
+        Query query = noteRef.whereEqualTo("PMIS ID",MainActivity.PMIS);
         query.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
