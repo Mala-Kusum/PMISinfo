@@ -66,9 +66,8 @@ public class MAdapter extends RecyclerView.Adapter<MAdapter.MyViewHolder> {
             @Override
             public void onClick(View v) {
                 MainActivity.PMIS = Integer.parseInt(holder.PMIS.getText().toString());
-
-                    Intent intent=new Intent(context,Project_Detail.class);
-                    context.startActivity(intent);
+                Intent intent=new Intent(context,Project_Detail.class);
+                context.startActivity(intent);
             }
         });
     }

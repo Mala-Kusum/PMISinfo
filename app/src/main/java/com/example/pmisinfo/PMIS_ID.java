@@ -35,7 +35,6 @@ public class PMIS_ID extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pmis_id);
         b=findViewById(R.id.b);
-        b1=findViewById(R.id.b1);
         e=findViewById(R.id.edit);
         ro=findViewById(R.id.RO);
         pmu=findViewById(R.id.PMU);
@@ -49,6 +48,9 @@ public class PMIS_ID extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 Log.e("TAG",adapterView.getSelectedItem().toString());
                 switch(adapterView.getSelectedItem().toString()){
+                    case "Select":
+                        ad2=ArrayAdapter.createFromResource(PMIS_ID.this,R.array.Select, android.R.layout.simple_spinner_item);
+                        break;
                     case"Ro-Leh/Srinagar":
                         ad2=ArrayAdapter.createFromResource(PMIS_ID.this,R.array.LehSrinagar, android.R.layout.simple_spinner_item);
                         break;
@@ -103,39 +105,71 @@ public class PMIS_ID extends AppCompatActivity {
 
             }
         });
-        b1.setOnClickListener(new View.OnClickListener() {
+        /*b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 pmu_selected=pmu.getSelectedItem().toString();
-                Intent i=new Intent(PMIS_ID.this,Projects.class);
-                startActivity(i);
+
             }
-        });
+        });*/
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MainActivity.PMIS=Integer.parseInt(String.valueOf(e.getText()));
-                // Log.e("pmis id","e.getText().toString()");
-                Query query = noteRef.whereEqualTo("PMIS ID",MainActivity.PMIS);
-                query.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        if (queryDocumentSnapshots.isEmpty()) {
-                            Toast.makeText(PMIS_ID.this, "Entered PMIS ID does not exist", Toast.LENGTH_SHORT).show();
-                        } else {
-                            for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                                Intent intent = new Intent(PMIS_ID.this, Project_Detail.class);
-                                startActivity(intent);
+                pmu_selected = pmu.getSelectedItem().toString();
+                if (pmu_selected.equals("Select")) {
+                    MainActivity.PMIS = Integer.parseInt("0"+e.getText().toString());
+                    // Log.e("pmis id","e.getText().toString()");
+                    Query query = noteRef.whereEqualTo("PMIS ID", MainActivity.PMIS);
+                    query.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            if (queryDocumentSnapshots.isEmpty()) {
+                                Toast.makeText(PMIS_ID.this, "Entered PMIS ID does not exist", Toast.LENGTH_SHORT).show();
+                            } else {
+                                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                                    Intent intent = new Intent(PMIS_ID.this, Project_Detail.class);
+                                    startActivity(intent);
+                                }
                             }
                         }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d("mainActivity ", "inquery");
+                            Log.e("tage", e.toString());
+                        }
+                    });
+                }
+                else{
+                    Log.e("onClick: ",e.getText().toString());
+                    if(e.getText().toString().equals("")){
+                        Intent i=new Intent(PMIS_ID.this,Projects.class);
+                        startActivity(i);
                     }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("mainActivity ", "inquery");
-                        Log.e("tage", e.toString());
+                    else{
+                        MainActivity.PMIS = Integer.parseInt("0"+e.getText().toString());
+                        Query query = noteRef.whereEqualTo("PMIS ID", MainActivity.PMIS).whereEqualTo("Project Monitoring Unit",pmu_selected);
+                        query.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                if (queryDocumentSnapshots.isEmpty()) {
+                                    Toast.makeText(PMIS_ID.this, "Entered PMIS ID does not exist in the given PMU", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                                        Intent intent = new Intent(PMIS_ID.this, Project_Detail.class);
+                                        startActivity(intent);
+                                    }
+                                }
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d("mainActivity ", "inquery");
+                                Log.e("tage", e.toString());
+                            }
+                        });
                     }
-                });
+                }
             }
         });
     }

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,11 +22,12 @@ import com.google.firebase.firestore.QuerySnapshot;
 public class Project_Detail extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     CollectionReference noteRef=db.collection("PMIS");
-    TextView id,name,upc,siteOffice,pmu,type,status,ro,state,dateOfAward,AE,AEContact,TL,TLContact,Contractor,ContractorContact,PM,PMContact,PMEmail,tEOT,EOTFrom,EOTTo,tCOS,COSFrom,COSTo;
+    TextView id,name,upc,siteOffice,pmu,type,status,ro,state,dateOfAward,AE,AEContact,TL,TLContact,Contractor,ContractorContact,PM,PMContact,PMEmail,tEOT,EOTFrom,EOTTo,tCOS,COSFrom,COSTo,show;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_project_detail);
+        show=findViewById(R.id.showall);
         id=findViewById(R.id.PMISID);
         name=findViewById(R.id.name);
         upc=findViewById(R.id.UniqueProjectCode);
@@ -93,6 +95,13 @@ public class Project_Detail extends AppCompatActivity {
             public void onFailure(@NonNull Exception e) {
                 Log.d("mainActivity ", "inquery");
                 Log.e("tage", e.toString());
+            }
+        });
+        show.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(Project_Detail.this,ShowAll.class);
+                startActivity(i);
             }
         });
     }
